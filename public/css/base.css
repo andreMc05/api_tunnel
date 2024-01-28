@@ -1,0 +1,70 @@
+html, body{
+    font-family: monospace;
+    font-size: 10px;
+}
+
+form{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#apiList{
+    font-size: 2rem;
+}
+
+.api-row{
+    padding: 5px;
+    display: grid;
+    border-radius: 5px;
+    width: 100%;
+    grid-template-columns: 110px 3fr 1fr;
+}
+
+.api-method{
+    padding: 5px 19px;
+    color: white;
+    width: 65px;
+    display: inline-block;
+    text-shadow: 2px 2px 2px #878282;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.method-details{
+    justify-self: start;
+    align-self: center;
+}
+
+.method-details--description{
+    margin-left: 10px;
+    font-style: italic;
+}
+
+.api-method--get{
+    background: #51b6d0;
+}
+.api-row--get{
+    border: 1px solid #51b6d0;
+    background: #e3f8fd;
+}
+.api-method--post{
+    background: #65c565;
+}
+.api-row--post{
+    border: 1px solid #65c565;
+    background: #eaffea;
+}
+.api-method--put{
+    background: #f1bd2e;
+}
+.api-row--put{
+    border: 1px solid #f1bd2e;
+    background: #fff7df;
+}
+.api-method--delete{
+    background: #f15252;
+}
+.api-row--delete{
+    border: 1px solid #f15252;
+    background: #ffefef;
+}

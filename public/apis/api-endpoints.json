@@ -1,0 +1,37 @@
+[
+  {
+    "description":"",
+    "parameter": "",
+    "path": "/users",
+    "method": "GET",
+    "methodName": "getUser"
+  },
+  {
+    "description":"",
+    "parameter": "",
+    "path": "/users",
+    "method": "POST",
+    "methodName": "postUser"
+  },
+  {
+    "description":"",
+    "parameter": "",
+    "path": "/users",
+    "method": "PUT",
+    "methodName": "putUser"
+  },
+  {
+    "description":"Update users email",
+    "parameter": "{id}/email",
+    "path": "/users",
+    "method": "PUT",
+    "methodName": "putUser"
+  },
+  {
+    "description":"",
+    "parameter": "",
+    "path": "/users",
+    "method": "DELETE",
+    "methodName": "deleteUser"
+  }
+]

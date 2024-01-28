@@ -1,0 +1,101 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... -->
+    <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+    <h1>API Tester</h1>
+    <div id="apiList"></div>
+    <form id="apiForm">
+        <!-- ... existing form elements ... -->
+    </form>
+    <pre id="response"></pre>
+
+    <script>
+        // Fetch and display API endpoints
+        async function loadApiEndpoints() {
+            const response = await fetch('/apis/api-endpoints.json');
+            const apiEndpoints = await response.json();
+            const list = document.getElementById('apiList');
+            apiEndpoints.forEach(endpoint => {
+                const itemRow = document.createElement('button');
+                const itemPath = document.createElement('span');
+                const itemDetails = document.createElement('div');
+                const itemDisc = document.createElement('span');
+                const itemSpan = document.createElement('span');
+                const itemForm = document.createElement('form');
+                const itemInput = document.createElement('input');
+                const itemBtn = document.createElement('button');
+                console.log('---------------------- fetch data',itemRow );
+
+                
+                itemPath.textContent = `${endpoint.path}`;
+                itemRow.classList.add('api-row')
+                itemSpan.textContent = `${endpoint.method}`;
+                itemSpan.classList.add('api-method');
+                itemDetails.classList.add('method-details');
+                itemBtn.textContent = 'submit';
+                itemRow.addEventListener('click', toggleInput)
+                //item.onclick = () => {
+                //    document.getElementById('url').value = endpoint.path;
+                //    document.getElementById('method').value = endpoint.method;
+                //};
+
+                if(!!endpoint.parameter){
+                    itemPath.textContent = `${endpoint.path}/${endpoint.parameter}`;
+                    itemRow.prepend(itemPath);
+                }
+
+                if(!!endpoint.description){
+                    itemDisc.classList.add('method-details--description');
+                    itemDisc.textContent = `${endpoint.description}`;
+                    itemPath.append(itemDisc);
+                }
+
+
+                switch(endpoint.method) {
+                    case 'GET':
+                        itemRow.classList.add('api-row--get');
+                        itemSpan.classList.add('api-method--get');
+                        break;
+                    case 'POST':
+                        itemRow.classList.add('api-row--post');
+                        itemSpan.classList.add('api-method--post');
+                        break;
+                    case 'PUT':
+                        itemRow.classList.add('api-row--put');
+                        itemSpan.classList.add('api-method--put');
+                        break;
+                    case 'DELETE':
+                        itemRow.classList.add('api-row--delete');
+                        itemSpan.classList.add('api-method--delete');
+                        break;
+                    default:
+                        console.log(`There was no color matching found for ${color}.`);
+                }
+
+                
+                itemDetails.prepend(itemPath);
+                itemRow.prepend(itemSpan, itemDetails);
+                list.appendChild(itemRow);
+                itemForm.appendChild(itemInput);
+                itemForm.appendChild(itemBtn);
+                list.appendChild(itemForm);
+            });
+        }
+
+
+        function toggleInput(){
+
+            console.log('---------------------- fetch data', this.parent);
+            console.dir(this);
+        }
+
+        loadApiEndpoints();
+
+        // ... existing form submission script ...
+    </script>
+</body>
+</html>

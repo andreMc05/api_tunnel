@@ -1,0 +1,7 @@
+{
+    "watch": ["src", "public"],
+    "ext": "js,html",
+    "ignore": ["src/tests/*"],
+    "exec": "node server.js"
+  }
+  
