@@ -18,6 +18,18 @@ form{
     border-radius: 5px;
     width: 100%;
     grid-template-columns: 110px 3fr 1fr;
+    letter-spacing: .1rem;
+}
+
+.api-row+form input, .api-row+form button{
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px #9ba4ad;
+}
+
+.api-row+form input{
+    width: 20vw;
+    outline: none;
 }
 
 .api-method{
