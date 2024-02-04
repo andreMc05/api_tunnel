@@ -9,7 +9,7 @@ const api_tunnel = (function (){
         </button>
         <form> 
             <input>
-            <button>Submit</button>
+            <button>Trigger</button>
         </form>
         <pre id="response"></pre>
     </div>
@@ -39,11 +39,14 @@ const api_tunnel = (function (){
         data.forEach(endpoint => {
             const templateMain = createDomFromStrings(apiTemplateString);
             const templateRow = templateMain.querySelector('.api-row');
+            const templateRowBtm = templateMain.querySelector('.api-row+form>button');
             const templateMethod = templateMain.querySelector('.api-method');
             const templateMethodDetails = templateMain.querySelector('.method-details>span');
     
             
             templateMethod.textContent = `${endpoint.method}`;
+            templateRowBtm.addEventListener('click', toggleInput);
+            
             if(!!endpoint.parameter){
                 templateMethodDetails.textContent = `${endpoint.path}/${endpoint.parameter}`;
             } else {
@@ -97,8 +100,15 @@ const api_tunnel = (function (){
         return htmlString;
     }
 
-    function toggleInput(){
-        console.log('---------------------- fetch data', this.parent);
-        console.dir(this);
+    function toggleInput(e){
+        e.preventDefault();
+
+        console.log('---------------------- fetch data',
+         e,
+         e.target.parentElement.querySelector('input').value,
+         e.target.parentElement.parentElement.querySelector('.api-method').textContent.trim(),
+         e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim(),
+         );
+        console.dir(e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim());
     }
 }(window.apiTunnel = window.apiTunnel || {} ));
