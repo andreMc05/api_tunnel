@@ -1,1 +1,3 @@
-"# api_tunnel" 
+***api_tunnel***
+
+This lightweight application serves as a simple yet effective tool for self-documenting and testing APIs, offering a streamlined alternative to more complex platforms like Swagger. Written purely in HTML, CSS, and JavaScript, it provides an intuitive interface for developers to visualize their API endpoints, methods, and parameters. Users can easily interact with their APIs, send requests, and evaluate responses directly within the app. Its simplicity and ease of use make it an ideal choice for small to medium-sized projects or for developers seeking a quick way to document and test APIs without the overhead of more comprehensive tools.
