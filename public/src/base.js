@@ -1,4 +1,5 @@
 const api_tunnel = (function (){
+    //require('dotenv').config({path: '../../.env'});
     const apiTemplateString = `
     <div>
         <button class="api-row">
@@ -24,6 +25,7 @@ const api_tunnel = (function (){
         const response = await fetch('/apis/api-endpoints.json');
         const apiEndpoints = await response.json();
         const list = document.getElementById('apiList');
+        //console.log(process.pid);
         createApiDom(apiEndpoints);
     }
     
@@ -107,8 +109,8 @@ const api_tunnel = (function (){
          e,
          e.target.parentElement.querySelector('input').value,
          e.target.parentElement.parentElement.querySelector('.api-method').textContent.trim(),
-         e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim(),
+         e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim()
          );
-        console.dir(e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim());
+        
     }
 }(window.apiTunnel = window.apiTunnel || {} ));
