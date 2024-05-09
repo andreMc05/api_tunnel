@@ -6,10 +6,8 @@ const allowedExtensions = ['.js', '.ts', '.jsx'];
 
 let apiDocs = {};
 
-function getFilesRecursively(dirPath) {
+function traverseDirectory(currentPath) {
     const files = [];
-
-    function traverseDirectory(currentPath) {
     const entries = fs.readdirSync(currentPath, { withFileTypes: true });
 
     for (const entry of entries) {
@@ -21,9 +19,6 @@ function getFilesRecursively(dirPath) {
             files.push(entryPath);
         }
     }
-    }
-
-    traverseDirectory(dirPath);
     return files;
 }
 
@@ -41,20 +36,26 @@ function findHTTPMethods(filePath) {
 
         httpMethods.push({ method: httpMethod, endpoint, file: filePath, lineNumber });
     }
-
     return httpMethods;
 }
 
-const files = getFilesRecursively(directoryPath);
+const files = traverseDirectory(directoryPath);
 
-for (const file of files) {
-    const httpMethods = findHTTPMethods(file);
-    console.log(`File: ${file}`);
-    httpMethods.forEach(({ method, endpoint, lineNumber }) => {
-        setApiDocs({file, method, endpoint, lineNumber})
-    });
-    console.log(`  -------------apiDocs done-- `, apiDocs);
+function init_httpMethods(){
+    console.time(`FindHTTPMethods Time is:`);
+    console.time(`SetApiDocs Time is:`);
+    for (const file of files) {
+        const httpMethods = findHTTPMethods(file);
+        console.log(`File: ${file}`);
+        httpMethods.forEach(({ method, endpoint, lineNumber }) => {
+            setApiDocs({file, method, endpoint, lineNumber})
+        });
+        console.log(`  -------------apiDocs done-- `, apiDocs);
+    }
+    console.timeLog(`SetApiDocs Time is:`);
+    console.timeLog(`FindHTTPMethods Time is:`);
 }
+
 
 function setApiDocs(apiStr) {
     const newApi = {
@@ -71,6 +72,7 @@ function setApiDocs(apiStr) {
 }
 
 module.exports = {
-    
+    init_httpMethods,
+    apiDocs
 }
 

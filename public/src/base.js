@@ -1,4 +1,5 @@
-const api_tunnel = (function (){
+
+//const api_tunnel = (function (){
     //require('dotenv').config({path: '../../.env'});
     const apiTemplateString = `
     <div>
@@ -8,7 +9,7 @@ const api_tunnel = (function (){
                 <span class="method-details--description"></span>
             </div>
         </button>
-        <form> 
+        <form>
             <input>
             <button>Trigger</button>
         </form>
@@ -26,7 +27,8 @@ const api_tunnel = (function (){
         const apiEndpoints = await response.json();
         const list = document.getElementById('apiList');
         //console.log(process.pid);
-        createApiDom(apiEndpoints);
+        console.log(apiEndpoints);
+        //createApiDom(apiEndpoints);
     }
     
     function createDomFromStrings(str){
@@ -35,7 +37,7 @@ const api_tunnel = (function (){
         return template.content.cloneNode(true);
     }
 
-    function createApiDom(data){
+    function createApiDomOld(data){
         const node = document.createRange().createContextualFragment(apiTemplateString);
         const template = document.createDocumentFragment();
         data.forEach(endpoint => {
@@ -89,6 +91,61 @@ const api_tunnel = (function (){
         document.querySelector('#apiList').appendChild(template);
     }
 
+    function createApiDom(data){
+        const node = document.createRange().createContextualFragment(apiTemplateString);
+        const template = document.createDocumentFragment();
+        data.forEach(endpoint => {
+            const templateMain = createDomFromStrings(apiTemplateString);
+            const templateRow = templateMain.querySelector('.api-row');
+            const templateRowBtm = templateMain.querySelector('.api-row+form>button');
+            const templateMethod = templateMain.querySelector('.api-method');
+            const templateMethodDetails = templateMain.querySelector('.method-details>span');
+    
+            
+            templateMethod.textContent = `${endpoint.method}`;
+            templateRowBtm.addEventListener('click', toggleInput);
+            
+            if(!!endpoint.parameter){
+                templateMethodDetails.textContent = `${endpoint.enpoint}/${endpoint.parameter}`;
+            } else {
+                templateMethodDetails.textContent = `${endpoint.enpoint}`;
+            }
+    
+            if(!!endpoint.description){
+                const enpointDesc = createDomFromStrings(pathDescription).querySelector('.method-details--description');
+                enpointDesc.textContent = `${endpoint.description}`;
+                templateMethodDetails.appendChild(enpointDesc);
+            }
+    
+            switch(endpoint.method) {
+                case 'GET':
+                    templateRow.classList.add('api-row--get');
+                    templateMethod.classList.add('api-method--get');
+                    break;
+                case 'POST':
+                    templateRow.classList.add('api-row--post');
+                    templateMethod.classList.add('api-method--post');
+                    break;
+                case 'PUT':
+                    templateRow.classList.add('api-row--put');
+                    templateMethod.classList.add('api-method--put');
+                    break;
+                case 'DELETE':
+                    templateRow.classList.add('api-row--delete');
+                    templateMethod.classList.add('api-method--delete');
+                    break;
+                default:
+                    console.log(`There was no color matching found for ${color}.`);
+            }
+    
+            template.appendChild(templateMain);
+            document.querySelector('#apiList').appendChild(templateMain);
+        });
+    
+        document.querySelector('#apiList').appendChild(template);
+        document.querySelector("#jsonCode").append( JSON.stringify(data, null, 2))
+    }
+
     function sanitizeHtml(htmlString) {
         // Remove script tags and their content
         htmlString = htmlString.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
@@ -104,13 +161,23 @@ const api_tunnel = (function (){
 
     function toggleInput(e){
         e.preventDefault();
-
         console.log('---------------------- fetch data',
-         e,
-         e.target.parentElement.querySelector('input').value,
-         e.target.parentElement.parentElement.querySelector('.api-method').textContent.trim(),
-         e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim()
-         );
-        
+        e,
+        e.target.parentElement.querySelector('input').value,
+        e.target.parentElement.parentElement.querySelector('.api-method').textContent.trim(),
+        e.target.parentElement.parentElement.querySelector('.method-details--description').textContent.trim()
+        );
     }
-}(window.apiTunnel = window.apiTunnel || {} ));
+//}(window.apiTunnel = window.apiTunnel || {} ));
+
+fetch('/api-data')
+    .then((res) => {
+        if (!res.ok){
+            throw new Error(`Could not get HTTP formatted data ${res.status}`);
+        }
+        return res.json();
+    })
+    .then((data) => {
+        console.log('---------===:::', data);
+        createApiDom(data['server.js'])
+    });
