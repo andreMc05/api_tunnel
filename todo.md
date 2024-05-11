@@ -11,7 +11,9 @@
 - [ ] Allow user to switch between the remote sites.
 - [ ] Display the response from the API.
 - [ ] For the endpoints that require one or more parameters, create a function that will determine the parameters and create an input field n the UI that will allow the user the inter required data.
-- [ ] Replace the API definition file with functionality that will read the API endpoints defined in the server JS file and display them in the UI.
+- [X] Replace the API definition file with functionality that will read the codebaese targeting predetermined files to identify the API endpoints.
+- [X] Display the enpoints in the UI.
+- [ ] Create performance monitoring code.
 - [ ] Create a lightweight and simple database.
 
 
